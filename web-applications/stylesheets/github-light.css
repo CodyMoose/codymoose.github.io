@@ -1,18 +1,14 @@
 /*
 The MIT License (MIT)
-
 Copyright (c) 2015 GitHub, Inc.
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +16,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
 */
 
 .pl-c /* comment */ {
@@ -29,25 +24,25 @@ SOFTWARE.
 
 .pl-c1      /* constant, markup.raw, meta.diff.header, meta.module-reference, meta.property-name, support, support.constant, support.variable, variable.other.constant */,
 .pl-s .pl-v /* string variable */ {
-  color: #0099cd;
+  color: #0086b3;
 }
 
 .pl-e  /* entity */,
 .pl-en /* entity.name */ {
-  color: #9774cb;
+  color: #795da3;
 }
 
 .pl-s .pl-s1 /* string source */,
 .pl-smi      /* storage.modifier.import, storage.modifier.package, storage.type.java, variable.other, variable.parameter.function */ {
-  color: #ddd;
+  color: #333;
 }
 
 .pl-ent /* entity.name.tag */ {
-  color: #7bcc72;
+  color: #63a35c;
 }
 
 .pl-k /* keyword, storage, storage.type */ {
-  color: #cc2372;
+  color: #a71d5d;
 }
 
 .pl-pds              /* punctuation.definition.string, string.regexp.character-class */,
@@ -57,49 +52,49 @@ SOFTWARE.
 .pl-sr .pl-cce       /* string.regexp constant.character.escape */,
 .pl-sr .pl-sra       /* string.regexp string.regexp.arbitrary-repitition */,
 .pl-sr .pl-sre       /* string.regexp source.ruby.embedded */ {
-  color: #3c66e2;
+  color: #183691;
 }
 
 .pl-v /* variable */ {
-  color: #fb8764;
+  color: #ed6a43;
 }
 
 .pl-id /* invalid.deprecated */ {
-  color: #e63525;
+  color: #b52a1d;
 }
 
 .pl-ii /* invalid.illegal */ {
-  background-color: #e63525;
+  background-color: #b52a1d;
   color: #f8f8f8;
 }
 
 .pl-sr .pl-cce /* string.regexp constant.character.escape */ {
-  color: #7bcc72;
+  color: #63a35c;
   font-weight: bold;
 }
 
 .pl-ml /* markup.list */ {
-  color: #c26b2b;
+  color: #693a17;
 }
 
 .pl-mh        /* markup.heading */,
 .pl-mh .pl-en /* markup.heading entity.name */,
 .pl-ms        /* meta.separator */ {
-  color: #264ec5;
+  color: #1d3e81;
   font-weight: bold;
 }
 
 .pl-mq /* markup.quote */ {
-  color: #00acac;
+  color: #008080;
 }
 
 .pl-mi /* markup.italic */ {
-  color: #ddd;
+  color: #333;
   font-style: italic;
 }
 
 .pl-mb /* markup.bold */ {
-  color: #ddd;
+  color: #333;
   font-weight: bold;
 }
 
@@ -114,11 +109,10 @@ SOFTWARE.
 }
 
 .pl-mdr /* meta.diff.range */ {
-  color: #9774cb;
+  color: #795da3;
   font-weight: bold;
 }
 
 .pl-mo /* meta.output */ {
-  color: #264ec5;
+  color: #1d3e81;
 }
-
