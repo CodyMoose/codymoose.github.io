@@ -13,7 +13,7 @@ var bigDiv;
 
 function setup() {
   createCanvas(400,400);
-  smallTIn = createSlider(0,30,12,0.05);
+  smallTIn = createSlider(0,30,13,0.05);
   smallTIn.position(0,0);
   bigTIn = createSlider(0,30,8,0.05);
   bigTIn.position(0,25);
