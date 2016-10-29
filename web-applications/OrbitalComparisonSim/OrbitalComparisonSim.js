@@ -13,10 +13,8 @@ var bigDiv;
 
 function setup() {
   createCanvas(400,400);
-  //smallTIn = createInput(12.995);
-  smallTIn = createSlider(0,30,13,0.05);
+  smallTIn = createSlider(0,30,12,0.05);
   smallTIn.position(0,0);
-  //bigTIn = createInput(8);
   bigTIn = createSlider(0,30,8,0.05);
   bigTIn.position(0,25);
   var sliderWidth = bigTIn.width;
@@ -50,6 +48,4 @@ function draw() {
   line(smallR * cos(smallA), smallR * sin(smallA), bigR * cos(bigA), bigR * sin(bigA));
   smallA += smallT / 2;
   bigA += bigT / 2;
-  println("smallA = " + smallA);
-  println("bigA = " + bigA);
 }
