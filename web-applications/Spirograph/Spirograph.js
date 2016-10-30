@@ -2,7 +2,8 @@ var midR = 60;
 var outR = 20;
 var ratio = midR / outR;
 var theta = -90;
-var points = [{th: 0, ph: 0}];
+//var pointsRTh = [{th: 0, ph: 0}];
+var pointsXY = [{x:0,y:0}];
 var midSlider;
 var outSlider;
 var midDiv;
@@ -32,12 +33,11 @@ function setup() {
 function draw() {
   if(outR != outSlider.value() || midR != midSlider.value()){
     theta = -90;
-    points = [{x:0,y:0}];
     outR = outSlider.value();
     midR = midSlider.value();
     ratio = midR / outR;
-    points1 = [{th: 0, ph: 0}];
-    
+    //pointsRTh = [{th: 0, ph: 0}];
+    pointsXY = [{x:0,y:0}];
     outDiv.html(outR);
     midDiv.html(midR);
   }
@@ -47,7 +47,8 @@ function draw() {
   stroke(255);
   ellipse(0, 0, midR * 2);
   ellipse((midR + outR) * cos(theta), (midR + outR) * sin(theta), outR * 2);
-  var p = {th: theta - 90, ph: theta * ratio + 90 * ratio - 180};
+  //var rth = {th: theta - 90, ph: (theta + 90) * ratio - 180};
+  var xy = {x: (midR + outR) * cos(theta) + outR * cos((theta + 90) * (ratio + 1) + 90), y: (midR + outR) * sin(theta) + outR * sin((theta + 90) * (ratio + 1) + 90)};
   //println(points.length);
   //if(points.length <= 1440){
   //  var overlap = false;
@@ -55,26 +56,36 @@ function draw() {
   //    if(dist(p.x,p.y,points[i].x,points[i].y) <= 1 && points.length - i >= 36)
   //      overlap = true;
   //  if(!overlap)
-      points.push(p);
+      //pointsRTh.push(rth);
+      pointsXY.push(xy);
   //}
-  stroke(255);
-  noFill();
-  for(var i = 1; i < points.length; i++){
-    push();
-    rotate(points[i].th);
-    translate(0, midR + outR);
-    rotate(points[i].ph);
-    ellipse(0, outR, 0);
-    pop();
-  }
+  //stroke(255);
+  //noFill();
+  //for(var i = 1; i < pointsRTh.length; i++){
+  //  push();
+  //  rotate(pointsRTh[i].th);
+  //  translate(0, midR + outR);
+  //  rotate(pointsRTh[i].ph);
+  //  ellipse(0, outR, 0);
+  //  pop();
+  //}
   
+  noFill();
   stroke(255);
-  push();
-    rotate(p.th);
-    translate(0, midR + outR);
-    rotate(p.ph);
-    line(0,0,0,outR);
-  pop();
+  beginShape();
+  for(var i = 1; i < pointsXY.length; i++){
+    vertex(pointsXY[i].x,pointsXY[i].y);
+  }
+  endShape();
+  line((midR + outR) * cos(theta), (midR + outR) * sin(theta),xy.x,xy.y);
+  
+  //stroke(255);
+  //push();
+  //  rotate(rth.th);
+  //  translate(0, midR + outR);
+  //  rotate(rth.ph);
+  //  line(0,0,0,outR);
+  //pop();
   
   theta ++;
 }
