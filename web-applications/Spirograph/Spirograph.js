@@ -1,13 +1,16 @@
 var midR = 60;
 var outR = 20;
+var percentR = 1;
 var ratio = midR / outR;
 var theta = -90;
 //var pointsRTh = [{th: 0, ph: 0}];
 var pointsXY = [{x:0,y:0}];
 var midSlider;
 var outSlider;
+var percentSlider;
 var midDiv;
 var outDiv;
+var percentDiv;
 
 function setup() {
   angleMode(DEGREES);
@@ -19,6 +22,9 @@ function setup() {
   midSlider = createSlider(1,75,60,1);
   midSlider.position(0,25);
   
+  percentSlider = createSlider(0,1,1,0.01);
+  percentSlider.position(0,50);
+  
   var sliderWidth = midSlider.width;
   
   outDiv = createDiv(outR);
@@ -28,18 +34,24 @@ function setup() {
   midDiv = createDiv(midR);
   midDiv.position(sliderWidth + 10, 25);
   midDiv.style('color','white');
+  
+  percentDiv = createDiv(percentR * 100 + '%');
+  percentDiv.position(sliderWidth + 10, 50);
+  percentDiv.style('color','white');
 }
 
 function draw() {
-  if(outR != outSlider.value() || midR != midSlider.value()){
+  if(outR != outSlider.value() || midR != midSlider.value() || percentR != percentSlider.value()){
     theta = -90;
     outR = outSlider.value();
     midR = midSlider.value();
+    percentR = percentSlider.value();
     ratio = midR / outR;
     //pointsRTh = [{th: 0, ph: 0}];
     pointsXY = [{x:0,y:0}];
     outDiv.html(outR);
     midDiv.html(midR);
+    percentDiv.html(percentR * 100 + '%');
   }
   translate(width/2,height/2);
   background(51);
@@ -48,7 +60,7 @@ function draw() {
   ellipse(0, 0, midR * 2);
   ellipse((midR + outR) * cos(theta), (midR + outR) * sin(theta), outR * 2);
   //var rth = {th: theta - 90, ph: (theta + 90) * ratio - 180};
-  var xy = {x: (midR + outR) * cos(theta) + outR * cos((theta + 90) * (ratio + 1) + 90), y: (midR + outR) * sin(theta) + outR * sin((theta + 90) * (ratio + 1) + 90)};
+  var xy = {x: (midR + outR) * cos(theta) + outR * percentR * cos((theta + 90) * (ratio + 1) + 90), y: (midR + outR) * sin(theta) + outR * percentR * sin((theta + 90) * (ratio + 1) + 90)};
   //println(points.length);
   //if(points.length <= 1440){
   //  var overlap = false;
