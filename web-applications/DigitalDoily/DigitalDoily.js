@@ -2,7 +2,7 @@ var sectors = 30;
 var sectorAngle = 360 / sectors;
 var pMX;
 var pMY;
-var canvas;
+var myCanvas;
 var resetBtn;
 var sectorSlider;
 var sectorDiv;
@@ -15,10 +15,11 @@ var gSlider;
 var gDiv;
 var bSlider;
 var bDiv;
+var downloadBtn;
 
 function setup(){
 	angleMode(DEGREES);
-	createCanvas(600, 600);
+	myCanvas = createCanvas(600, 600);
 	translate(width / 2, height / 2);
 	reset();
 	resetBtn = createButton("Reset");
@@ -43,6 +44,10 @@ function setup(){
 	bSlider.position(gSlider.x, gSlider.y + gSlider.height + 5)
 	bDiv = createDiv("Blue: " + b);
 	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
+	
+	downloadBtn = createButton("Download");
+	downloadBtn.position(bSlider.x, bSlider.y + bSlider.height + 5);
+	downloadBtn.mousePressed(download);
 }
 
 function draw() {
@@ -94,4 +99,8 @@ function reset(){
 		rotate(sectorAngle);
 	}
 	pop();
+}
+
+function download() {
+	saveCanvas(myCanvas,'DigitalDoily', 'jpg');
 }
