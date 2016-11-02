@@ -94,7 +94,7 @@ function setup(){
 function draw() {
 	translate(width/2,height/2);
 	if(sectorsOn){
-		reset();
+		refresh();
 	}
 	if(sectors != sectorSlider.value() || mode != modeSlider.value()){
 		sectors = sectorSlider.value();
@@ -109,7 +109,7 @@ function draw() {
 		}
 		sectorAngle = 360 / sectors;
 		sectorDiv.html("Sectors: " + sectors);
-		reset();
+		refresh();
 	}
 	
 	if(r != rSlider.value() || g != gSlider.value() || b != bSlider.value()){
@@ -191,7 +191,7 @@ function mouseDragged() {
 	}
 }
 
-function reset(){
+function refresh() {
 	background(51);
 	strokeWeight(1);
 	if(sectorsOn){
@@ -205,7 +205,11 @@ function reset(){
 	}
 	stroke(r, g, b);
 	strokeWeight(strkWt);
-	print(strokeWeight);
+}
+
+function reset() {
+	refresh();
+	coords = [];
 }
 
 function download() {
@@ -238,7 +242,7 @@ function toggleSize() {
 	
 	background(51);
 	translate(width/2,height/2);
-	reset();
+	refresh();
 }
 
 function toggleSectors() {
