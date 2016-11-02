@@ -32,7 +32,7 @@ function setup(){
 	translate(width / 2, height / 2);
 	reset();
 	resetBtn = createButton("Reset");
-	resetBtn.position(5, height + 5);
+	resetBtn.position(width + 5, 5);
 	resetBtn.mousePressed(reset);
 	sectorSlider = createSlider(1,45,30,1);
 	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
@@ -145,15 +145,11 @@ function download() {
 function toggleSize() {
 	if(myCanvas.width == 600){
 		myCanvas.size(w, h);
+		resetBtn.position(5, height + 5);
 	} else {
-		myCanvas.size(600, 600);	
+		myCanvas.size(600, 600);
+		resetBtn.position(width + 5, 5);
 	}
-	
-	background(51);
-	translate(width/2,height/2);
-	reset();
-
-	resetBtn.position(5, height + 5);
 	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
 	sectorDiv.position(sectorSlider.x + sectorSlider.width + 5, sectorSlider.y);
 	rSlider.position(sectorSlider.x, sectorSlider.y + sectorSlider.height + 5)
@@ -164,8 +160,14 @@ function toggleSize() {
 	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
 	toggleBtn.position(bSlider.x, bSlider.y + bSlider.height + 5);
 	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, bSlider.y + bSlider.height + 5);
-	modeSlider.position(sectorDiv.x + sectorDiv.width + 20, sectorDiv.y);
+	modeSlider.position(sectorDiv.x + sectorSlider.width + 20, sectorDiv.y);
 	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
+	sectorToggle.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
+	println(modeSlider.position());
+	
+	background(51);
+	translate(width/2,height/2);
+	reset();
 }
 
 function toggleSectors() {
