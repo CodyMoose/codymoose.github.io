@@ -68,19 +68,21 @@ function draw() {
 }
 
 function mouseDragged() {
-	push();
-	for(var i = 0; i < sectors; i++){
-		line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
-		rotate(sectorAngle);
+	if(mouseX <= width && mouseY <= height) {
+		push();
+		for(var i = 0; i < sectors; i++){
+			line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
+			rotate(sectorAngle);
+		}
+		pop();
+		
+		push();
+		for(var i = 0; i < sectors; i++){
+			line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
+			rotate(sectorAngle);
+		}
+		pop();
 	}
-	pop();
-	
-	push();
-	for(var i = 0; i < sectors; i++){
-		line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
-		rotate(sectorAngle);
-	}
-	pop();
 }
 
 function reset(){
