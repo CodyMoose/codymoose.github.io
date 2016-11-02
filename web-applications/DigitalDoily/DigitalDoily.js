@@ -27,6 +27,7 @@ var sectorToggle;
 var strkWt = 1;
 var strkWtSlider;
 var strkWtDiv;
+var coords = [];
 
 function setup(){
 	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
@@ -57,6 +58,13 @@ function setup(){
 	bDiv = createDiv("Blue: " + b);
 	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
 	
+	var red = color(r,0,0);
+	rDiv.style('color', red);
+	var green = color(0,g,0);
+	gDiv.style('color', green);
+	var blue = color(0,0,b);
+	bDiv.style('color', blue);
+	
 	toggleBtn = createButton("Toggle Canvas Size");
 	toggleBtn.position(bSlider.x, bSlider.y + bSlider.height + 5);
 	toggleBtn.mousePressed(toggleSize);
@@ -85,6 +93,9 @@ function setup(){
 
 function draw() {
 	translate(width/2,height/2);
+	if(sectorsOn){
+		reset();
+	}
 	if(sectors != sectorSlider.value() || mode != modeSlider.value()){
 		sectors = sectorSlider.value();
 		mode = modeSlider.value();
@@ -94,7 +105,7 @@ function draw() {
 				break;
 			case 1:
 				modeDiv.html("Reflection Mode: Single");
-				break;			
+				break;
 		}
 		sectorAngle = 360 / sectors;
 		sectorDiv.html("Sectors: " + sectors);
@@ -108,6 +119,21 @@ function draw() {
 		rDiv.html("Red: " + r);
 		gDiv.html("Green: " + g);
 		bDiv.html("Blue: " + b);
+		
+		var red = color(r,0,0);
+		rDiv.style('color', red);
+		
+		var green = color(0,g,0);
+		gDiv.style('color', green);
+		
+		var blue = color(0,0,b);
+		bDiv.style('color', blue);
+		
+		var result = color(r,g,b);
+		rDiv.style('background-color',result);
+		gDiv.style('background-color',result);
+		bDiv.style('background-color',result);
+		
 	}
 	
 	strkWtDiv.html("Line Width: " + strkWt);
@@ -117,30 +143,57 @@ function draw() {
 	stroke(r,g,b);
 	pMX = mouseX - width / 2;
 	pMY = mouseY - height / 2;
-}
+	
 
-function mouseDragged() {
-	if(mouseX <= width && mouseY <= height) {
-			push();
-			for(var i = 0; i < sectors; i++){
-				line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
-				rotate(sectorAngle);
-			}
-			pop();
-		
+	for(var j = 1; j < coords.length - 1; j++) {
+		if(coords[j].x != -1 && coords[j].y != -1 && coords[j + 1].x != -1 && coords[j + 1].y != -1) {
+		stroke(coords[j].c);
+		strokeWeight(coords[j].s);
+//		print(coords[j]);
+		push();
+		for(var i = 0; i < sectors; i++){
+			line(coords[j].x, coords[j].y, coords[j + 1].x, coords[j + 1].y);
+			rotate(sectorAngle);
+		}
+		pop();
+	
 		if(mode == 0) {
 			push();
 			for(var i = 0; i < sectors; i++){
-				line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
+				line(coords[j].y, coords[j].x, coords[j + 1].y, coords[j + 1].x);
 				rotate(sectorAngle);
 			}
 			pop();
 		}
+		}
+	}
+}
+
+function mouseDragged() {
+	if(mouseX <= width && mouseY <= height) {
+		var p = {x: mouseX - width / 2, y: mouseY - height / 2, c: color(r,g,b), s: strkWt};
+		coords.push(p);
+//			push();
+//			for(var i = 0; i < sectors; i++){
+//				line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
+//				rotate(sectorAngle);
+//			}
+//			pop();
+//		
+//		if(mode == 0) {
+//			push();
+//			for(var i = 0; i < sectors; i++){
+//				line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
+//				rotate(sectorAngle);
+//			}
+//			pop();
+//		}
 	}
 }
 
 function reset(){
 	background(51);
+	strokeWeight(1);
 	if(sectorsOn){
 		stroke(100);	
 		push();
@@ -150,6 +203,9 @@ function reset(){
 		}
 		pop();
 	}
+	stroke(r, g, b);
+	strokeWeight(strkWt);
+	print(strokeWeight);
 }
 
 function download() {
@@ -177,7 +233,8 @@ function toggleSize() {
 	modeSlider.position(sectorDiv.x + sectorSlider.width + 20, sectorDiv.y);
 	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
 	sectorToggle.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
-	println(modeSlider.position());
+	strkWtSlider.position(sectorToggle.x, sectorToggle.y + sectorToggle.height + 5);
+	strkWtDiv.position(strkWtSlider.x + strkWtSlider.width + 5, strkWtSlider.y);
 	
 	background(51);
 	translate(width/2,height/2);
@@ -186,4 +243,11 @@ function toggleSize() {
 
 function toggleSectors() {
 	sectorsOn = !sectorsOn;
+	background(51);
+}
+
+function mouseReleased() {
+	var p = {x: -1, y: -1, c: color(0,0,0,0), s: 0};
+	coords.push(p);
+	println(coords);
 }
