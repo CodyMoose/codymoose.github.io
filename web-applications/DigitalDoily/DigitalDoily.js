@@ -19,6 +19,9 @@ var downloadBtn;
 var toggleBtn;
 var w = window.innerWidth;
 var h = window.innerHeight;
+var mode = 0;
+var modeSlider;
+var modeDiv;
 
 function setup(){
 	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
@@ -56,12 +59,28 @@ function setup(){
 	downloadBtn = createButton("Download");
 	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, bSlider.y + bSlider.height + 5);
 	downloadBtn.mousePressed(download);
+	
+	modeSlider = createSlider(0,1,0,1);
+	modeDiv = createDiv("Reflection Mode: Both");
+	
+	modeSlider.size(modeSlider.width / 3, modeSlider.height);
+	modeSlider.position(sectorDiv.x + sectorSlider.width + 20, sectorSlider.y);
+	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
 }
 
 function draw() {
 	translate(width/2,height/2);
-	if(sectors != sectorSlider.value()){
+	if(sectors != sectorSlider.value() || mode != modeSlider.value()){
 		sectors = sectorSlider.value();
+		mode = modeSlider.value();
+		switch(mode){
+			case 0:
+				modeDiv.html("Reflection Mode: Both");
+				break;
+			case 1:
+				modeDiv.html("Reflection Mode: Single");
+				break;			
+		}
 		sectorAngle = 360 / sectors;
 		sectorDiv.html("Sectors: " + sectors);
 		reset();
@@ -82,19 +101,21 @@ function draw() {
 
 function mouseDragged() {
 	if(mouseX <= width && mouseY <= height) {
-		push();
-		for(var i = 0; i < sectors; i++){
-			line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
-			rotate(sectorAngle);
-		}
-		pop();
+			push();
+			for(var i = 0; i < sectors; i++){
+				line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
+				rotate(sectorAngle);
+			}
+			pop();
 		
-		push();
-		for(var i = 0; i < sectors; i++){
-			line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
-			rotate(sectorAngle);
+		if(mode == 0) {
+			push();
+			for(var i = 0; i < sectors; i++){
+				line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
+				rotate(sectorAngle);
+			}
+			pop();
 		}
-		pop();
 	}
 }
 
@@ -119,9 +140,10 @@ function toggleSize() {
 	} else {
 		myCanvas.size(600, 600);	
 	}
+	
+	background(51);
 	translate(width/2,height/2);
 	reset();
-	
 
 	resetBtn.position(5, height + 5);
 	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
@@ -134,4 +156,6 @@ function toggleSize() {
 	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
 	toggleBtn.position(bSlider.x, bSlider.y + bSlider.height + 5);
 	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, bSlider.y + bSlider.height + 5);
+	modeSlider.position(sectorDiv.x + sectorDiv.width + 20, sectorDiv.y);
+	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
 }
