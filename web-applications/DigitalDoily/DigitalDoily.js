@@ -18,6 +18,7 @@ var bDiv;
 var downloadBtn;
 
 function setup(){
+	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
 	angleMode(DEGREES);
 	myCanvas = createCanvas(600, 600);
 	translate(width / 2, height / 2);
