@@ -24,17 +24,20 @@ var modeSlider;
 var modeDiv;
 var sectorsOn = true;
 var sectorToggle;
+var strkWt = 1;
+var strkWtSlider;
+var strkWtDiv;
 
 function setup(){
 	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
 	angleMode(DEGREES);
-	myCanvas = createCanvas(600,600);
+	myCanvas = createCanvas(600, 600);
 	translate(width / 2, height / 2);
 	reset();
 	resetBtn = createButton("Reset");
 	resetBtn.position(width + 5, 5);
 	resetBtn.mousePressed(reset);
-	sectorSlider = createSlider(1,45,30,1);
+	sectorSlider = createSlider(1, 450, 30, 1);
 	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
 	sectorDiv = createDiv("Sectors: " + sectors);
 	sectorDiv.position(sectorSlider.x + sectorSlider.width + 5, sectorSlider.y);
@@ -72,6 +75,12 @@ function setup(){
 	sectorToggle = createButton("Toggle Sector Lines");
 	sectorToggle.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
 	sectorToggle.mousePressed(toggleSectors);
+	
+	strkWtSlider = createSlider(0,40,1,1);
+	strkWtDiv = createDiv("Line Width: " + strkWt);
+	
+	strkWtSlider.position(sectorToggle.x, sectorToggle.y + sectorToggle.height + 5);
+	strkWtDiv.position(strkWtSlider.x + strkWtSlider.width + 5, strkWtSlider.y);
 }
 
 function draw() {
@@ -100,6 +109,11 @@ function draw() {
 		gDiv.html("Green: " + g);
 		bDiv.html("Blue: " + b);
 	}
+	
+	strkWtDiv.html("Line Width: " + strkWt);
+	strkWt = strkWtSlider.value();
+	strokeWeight(strkWt);
+	
 	stroke(r,g,b);
 	pMX = mouseX - width / 2;
 	pMY = mouseY - height / 2;
