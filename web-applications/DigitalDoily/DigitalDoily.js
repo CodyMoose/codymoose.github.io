@@ -22,6 +22,8 @@ var h = window.innerHeight;
 var mode = 0;
 var modeSlider;
 var modeDiv;
+var sectorsOn = true;
+var sectorToggle;
 
 function setup(){
 	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
@@ -66,6 +68,10 @@ function setup(){
 	modeSlider.size(modeSlider.width / 3, modeSlider.height);
 	modeSlider.position(sectorDiv.x + sectorSlider.width + 20, sectorSlider.y);
 	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
+	
+	sectorToggle = createButton("Toggle Sector Lines");
+	sectorToggle.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
+	sectorToggle.mousePressed(toggleSectors);
 }
 
 function draw() {
@@ -121,13 +127,15 @@ function mouseDragged() {
 
 function reset(){
 	background(51);
-	stroke(100);	
-	push();
-	for(var i = 0; i < sectors; i++){
-		line(0, 0, width, height);
-		rotate(sectorAngle);
+	if(sectorsOn){
+		stroke(100);	
+		push();
+		for(var i = 0; i < sectors; i++){
+			line(0, 0, width, height);
+			rotate(sectorAngle);
+		}
+		pop();
 	}
-	pop();
 }
 
 function download() {
@@ -158,4 +166,8 @@ function toggleSize() {
 	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, bSlider.y + bSlider.height + 5);
 	modeSlider.position(sectorDiv.x + sectorDiv.width + 20, sectorDiv.y);
 	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
+}
+
+function toggleSectors() {
+	sectorsOn = !sectorsOn;
 }
