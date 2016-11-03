@@ -28,8 +28,12 @@ var strkWt = 1;
 var strkWtSlider;
 var strkWtDiv;
 var coords = [];
+var undoBtn;
+var bkgd;
+var drawPicker;
 
 function setup(){
+	bkgd = color(51,51,51);
 	document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
 	angleMode(DEGREES);
 	myCanvas = createCanvas(600, 600);
@@ -38,57 +42,47 @@ function setup(){
 	resetBtn = createButton("Reset");
 	resetBtn.position(width + 5, 5);
 	resetBtn.mousePressed(reset);
-	sectorSlider = createSlider(1, 450, 30, 1);
+	sectorSlider = createSlider(0, 450, 30, 1);
 	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
 	sectorDiv = createDiv("Sectors: " + sectors);
 	sectorDiv.position(sectorSlider.x + sectorSlider.width + 5, sectorSlider.y);
-
-	rSlider = createSlider(0,255,255,1);
-	rSlider.position(sectorSlider.x, sectorSlider.y + sectorSlider.height + 5)
-	rDiv = createDiv("Red: " + r);
-	rDiv.position(rSlider.x + rSlider.width + 5, rSlider.y);
-
-	gSlider = createSlider(0,255,255,1);
-	gSlider.position(rSlider.x, rSlider.y + rSlider.height + 5)
-	gDiv = createDiv("Green: " + g);
-	gDiv.position(gSlider.x + gSlider.width + 5, gSlider.y);
-
-	bSlider = createSlider(0,255,255,1);
-	bSlider.position(gSlider.x, gSlider.y + gSlider.height + 5)
-	bDiv = createDiv("Blue: " + b);
-	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
 	
-	var red = color(r,0,0);
-	rDiv.style('color', red);
-	var green = color(0,g,0);
-	gDiv.style('color', green);
-	var blue = color(0,0,b);
-	bDiv.style('color', blue);
+	var elem1 = document.getElementById('drawColor');
+	elem1.style.left = sectorSlider.x + 'px';
+	elem1.style.top =  sectorSlider.y + sectorSlider.height + 5 + 'px';
+	
+	var elem2 = document.getElementById('backgroundColor');
+	elem2.style.left = sectorSlider.x + 'px';
+	elem2.style.top = sectorSlider.y + 2 * (sectorSlider.height + 6) + 'px';
 	
 	toggleBtn = createButton("Toggle Canvas Size");
-	toggleBtn.position(bSlider.x, bSlider.y + bSlider.height + 5);
+	toggleBtn.position(sectorSlider.x, sectorSlider.y + 3 * (sectorSlider.height + 7));
 	toggleBtn.mousePressed(toggleSize);
 	
 	downloadBtn = createButton("Download");
-	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, bSlider.y + bSlider.height + 5);
+	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, toggleBtn.y);
 	downloadBtn.mousePressed(download);
+	
+	sectorToggle = createButton("Toggle Sector Lines");
+	sectorToggle.position(sectorDiv.x + sectorSlider.width + 20, sectorSlider.y);
+	sectorToggle.mousePressed(toggleSectors);
 	
 	modeSlider = createSlider(0,1,0,1);
 	modeDiv = createDiv("Reflection Mode: Both");
 	
 	modeSlider.size(modeSlider.width / 3, modeSlider.height);
-	modeSlider.position(sectorDiv.x + sectorSlider.width + 20, sectorSlider.y);
+	modeSlider.position(sectorToggle.x, sectorToggle.y + sectorToggle.height + 5);
 	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
-	
-	sectorToggle = createButton("Toggle Sector Lines");
-	sectorToggle.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
-	sectorToggle.mousePressed(toggleSectors);
 	
 	strkWtSlider = createSlider(0,40,1,1);
 	strkWtDiv = createDiv("Line Width: " + strkWt);
 	
-	strkWtSlider.position(sectorToggle.x, sectorToggle.y + sectorToggle.height + 5);
+	strkWtSlider.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
 	strkWtDiv.position(strkWtSlider.x + strkWtSlider.width + 5, strkWtSlider.y);
+	
+	undoBtn = createButton("Undo");
+	undoBtn.position(strkWtSlider.x, strkWtSlider.y + strkWtSlider.height + 5);
+	undoBtn.mousePressed(undo);
 }
 
 function draw() {
@@ -112,59 +106,33 @@ function draw() {
 		refresh();
 	}
 	
-	if(r != rSlider.value() || g != gSlider.value() || b != bSlider.value()){
-		r = rSlider.value();
-		g = gSlider.value();
-		b = bSlider.value();
-		rDiv.html("Red: " + r);
-		gDiv.html("Green: " + g);
-		bDiv.html("Blue: " + b);
-		
-		var red = color(r,0,0);
-		rDiv.style('color', red);
-		
-		var green = color(0,g,0);
-		gDiv.style('color', green);
-		
-		var blue = color(0,0,b);
-		bDiv.style('color', blue);
-		
-		var result = color(r,g,b);
-		rDiv.style('background-color',result);
-		gDiv.style('background-color',result);
-		bDiv.style('background-color',result);
-		
-	}
-	
 	strkWtDiv.html("Line Width: " + strkWt);
 	strkWt = strkWtSlider.value();
 	strokeWeight(strkWt);
-	
-	stroke(r,g,b);
 	pMX = mouseX - width / 2;
 	pMY = mouseY - height / 2;
 	
 
-	for(var j = 1; j < coords.length - 1; j++) {
+	for(var j = 0; j < coords.length - 1; j++) {
 		if(coords[j].x != -1 && coords[j].y != -1 && coords[j + 1].x != -1 && coords[j + 1].y != -1) {
-		stroke(coords[j].c);
-		strokeWeight(coords[j].s);
-//		print(coords[j]);
-		push();
-		for(var i = 0; i < sectors; i++){
+			stroke(coords[j].c);
+			strokeWeight(coords[j].s);
 			line(coords[j].x, coords[j].y, coords[j + 1].x, coords[j + 1].y);
-			rotate(sectorAngle);
-		}
-		pop();
-	
-		if(mode == 0) {
 			push();
 			for(var i = 0; i < sectors; i++){
-				line(coords[j].y, coords[j].x, coords[j + 1].y, coords[j + 1].x);
+				line(coords[j].x, coords[j].y, coords[j + 1].x, coords[j + 1].y);
 				rotate(sectorAngle);
 			}
 			pop();
-		}
+			
+			if(mode == 0) {
+				push();
+				for(var i = 0; i < sectors; i++){
+					line(coords[j].y, coords[j].x, coords[j + 1].y, coords[j + 1].x);
+					rotate(sectorAngle);
+				}
+				pop();
+			}
 		}
 	}
 }
@@ -173,26 +141,11 @@ function mouseDragged() {
 	if(mouseX <= width && mouseY <= height) {
 		var p = {x: mouseX - width / 2, y: mouseY - height / 2, c: color(r,g,b), s: strkWt};
 		coords.push(p);
-//			push();
-//			for(var i = 0; i < sectors; i++){
-//				line(pMX, pMY, mouseX - width / 2, mouseY - height / 2);
-//				rotate(sectorAngle);
-//			}
-//			pop();
-//		
-//		if(mode == 0) {
-//			push();
-//			for(var i = 0; i < sectors; i++){
-//				line(pMY, pMX, mouseY - height / 2, mouseX - width / 2);
-//				rotate(sectorAngle);
-//			}
-//			pop();
-//		}
 	}
 }
 
 function refresh() {
-	background(51);
+	background(bkgd);
 	strokeWeight(1);
 	if(sectorsOn){
 		stroke(100);	
@@ -224,34 +177,67 @@ function toggleSize() {
 		myCanvas.size(600, 600);
 		resetBtn.position(width + 5, 5);
 	}
-	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
-	sectorDiv.position(sectorSlider.x + sectorSlider.width + 5, sectorSlider.y);
-	rSlider.position(sectorSlider.x, sectorSlider.y + sectorSlider.height + 5)
-	rDiv.position(rSlider.x + rSlider.width + 5, rSlider.y);
-	gSlider.position(rSlider.x, rSlider.y + rSlider.height + 5)
-	gDiv.position(gSlider.x + gSlider.width + 5, gSlider.y);
-	bSlider.position(gSlider.x, gSlider.y + gSlider.height + 5)
-	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
-	toggleBtn.position(bSlider.x, bSlider.y + bSlider.height + 5);
-	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, bSlider.y + bSlider.height + 5);
-	modeSlider.position(sectorDiv.x + sectorSlider.width + 20, sectorDiv.y);
-	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
-	sectorToggle.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
-	strkWtSlider.position(sectorToggle.x, sectorToggle.y + sectorToggle.height + 5);
-	strkWtDiv.position(strkWtSlider.x + strkWtSlider.width + 5, strkWtSlider.y);
 	
-	background(51);
+	sectorSlider.position(resetBtn.x, resetBtn.y + resetBtn.height + 5)
+	println(sectorSlider.x);
+	println(sectorSlider.y + sectorSlider.height + 5);
+	sectorDiv.position(sectorSlider.x + sectorSlider.width + 5, sectorSlider.y);
+//	rSlider.position(sectorSlider.x, sectorSlider.y + sectorSlider.height + 5)
+//	rDiv.position(rSlider.x + rSlider.width + 5, rSlider.y);
+//	gSlider.position(rSlider.x, rSlider.y + rSlider.height + 5)
+//	gDiv.position(gSlider.x + gSlider.width + 5, gSlider.y);
+//	bSlider.position(gSlider.x, gSlider.y + gSlider.height + 5)
+//	bDiv.position(bSlider.x + bSlider.width + 5, bSlider.y);
+	toggleBtn.position(sectorSlider.x, sectorSlider.y + 3 * (sectorSlider.height + 7));
+	downloadBtn.position(toggleBtn.x + toggleBtn.width + 5, toggleBtn.y);
+	sectorToggle.position(sectorDiv.x + sectorSlider.width + 20, sectorSlider.y);
+	modeSlider.position(sectorToggle.x, sectorToggle.y + sectorToggle.height + 5);
+	modeDiv.position(modeSlider.x + modeSlider.width + 5, modeSlider.y);
+	strkWtSlider.position(modeSlider.x, modeSlider.y + modeSlider.height + 5);
+	strkWtDiv.position(strkWtSlider.x + strkWtSlider.width + 5, strkWtSlider.y);
+	undoBtn.position(strkWtSlider.x, strkWtSlider.y + strkWtSlider.height + 5);
+	
+	var elem1 = document.getElementById('drawColor');
+	elem1.style.left = sectorSlider.x + 'px';
+	elem1.style.top =  sectorSlider.y + sectorSlider.height + 5 + 'px';
+	
+	var elem2 = document.getElementById('backgroundColor');
+	elem2.style.left = sectorSlider.x + 'px';
+	elem2.style.top = sectorSlider.y + 2 * (sectorSlider.height + 6) + 'px';
+	
+	background(bkgd);
 	translate(width/2,height/2);
 	refresh();
 }
 
 function toggleSectors() {
 	sectorsOn = !sectorsOn;
-	background(51);
+	background(bkgd);
 }
 
 function mouseReleased() {
 	var p = {x: -1, y: -1, c: color(0,0,0,0), s: 0};
 	coords.push(p);
-	println(coords);
+}
+
+function undo() {
+	if(coords.length > 0) {
+		coords.pop();
+		while(coords[coords.length - 1].x != -1){
+			coords.pop();
+		}
+		coords.pop();
+	}
+}
+
+function updateDrawColor(ri, gi, bi) {
+	r = ri;
+	g = gi;
+	b = bi;
+	stroke(r, g, b);
+}
+
+function updateBackgroundColor(ri, gi, bi) {
+	bkgd = color(ri, gi, bi);
+	background(bkgd);
 }

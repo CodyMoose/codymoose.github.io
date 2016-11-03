@@ -1,13 +1,36 @@
 <html>
-<title>Cody Moose | Digital Doily</title>
 <head>
   <meta charset="UTF-8">
   <script lang="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <script lang="javascript" type="text/javascript" src="libraries/p5.dom.js"></script>
+  <script lang="javascript" type="text/javascript" src="libraries/jscolor.js"></script>
+  <script lang="javascript" type="text/javascript" src="libraries/jscolor.min.js"></script>
   <script lang="javascript" type="text/javascript" src="DigitalDoily.js"></script>
   <style> body {padding: 0; margin: 0;} </style>
 </head>
 
 <body>
+  <input class="jscolor {onFineChange:'updateDraw(this)'}" value="ffffff" id="drawColor" style="position:absolute;left:605px;top:56px">
+  <input class="jscolor {onFineChange:'updateBackground(this)'}" value="333333" id="backgroundColor" style="position:absolute;left:605px;top:86px">
 </body>
+
+<script>
+function updateDraw(picker) {
+	var r = Math.round(picker.rgb[0]);
+	var g = Math.round(picker.rgb[1]);
+	var b = Math.round(picker.rgb[2]);
+	println(picker.rgb);
+	updateDrawColor(r, g, b);
+}
+</script>
+
+<script>
+function updateBackground(picker) {
+	var r = Math.round(picker.rgb[0]);
+	var g = Math.round(picker.rgb[1]);
+	var b = Math.round(picker.rgb[2]);
+	println(picker.rgb);
+	updateBackgroundColor(r, g, b);
+}
+</script>
 </html>
