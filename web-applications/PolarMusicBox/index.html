@@ -1,0 +1,25 @@
+<html>
+<head>
+<meta charset="UTF-8">
+
+<!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+<script lang="javascript" type="text/javascript" src="libraries/p5.js"></script>
+<script lang="javascript" type="text/javascript" src="libraries/p5.dom.js"></script>
+<script lang="javascript" type="text/javascript" src="PolarMusicBox.js"></script>
+<!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+
+<!-- this line removes any default padding and style. you might only need one of these values set. -->
+<style>
+body {
+	padding: 0;
+	margin: 0;
+}
+</style>
+<title>Cody Moose | Polar Music Box</title>
+</head>
+
+<body>
+    <input type="range" id="tineSlider" onInput="changeTines()" min="1" max="200" value="40" style="position: absolute">
+    <div id="tineDiv" style="position: absolute">Tines: <span id="tineSpan">40</span></div>
+</body>
+</html>
