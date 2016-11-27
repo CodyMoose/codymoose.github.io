@@ -263,7 +263,7 @@ function updateDrawColor(rIn, gIn, bIn) {
 	stroke(drawColorR, drawColorG, drawColorB);
 }
 
-function updateBackgroundColor(gInn, gIn, bIn) {
+function updateBackgroundColor(rIn, gIn, bIn) {
 	backgroundColor = color(rIn, gIn, bIn);
 	background(backgroundColor);
 }
