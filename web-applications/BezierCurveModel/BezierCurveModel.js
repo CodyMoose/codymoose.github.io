@@ -3,6 +3,9 @@ var points = [];
 var pointsAmount = 4;
 var hStep = 360 / (pointsAmount - 1);
 var percent = .5;
+var mousePress = {x: 0, y: 0};
+var grabRad = 12.5;
+var circleGrabbed = -1;
 
 function setup(){
     colorMode(HSB);
@@ -38,10 +41,14 @@ function draw(){
             line(p1.x, p1.y, p2.x, p2.y);
             noStroke();
             fill(0,0,100);
-            ellipse(p1.x, p1.y, 5);
+            if(i == 0){
+                ellipse(p1.x, p1.y, grabRad);
+            } else ellipse(p1.x, p1.y, 5);
         }
         var p = points[i][points[i].length - 1];
-        ellipse(p.x, p.y, 5);
+        if(i == 0){
+            ellipse(p.x, p.y, grabRad);
+        } else ellipse(p.x, p.y, 5);
     }
     
     for(var i = 1; i < pointsAmount; i++){
@@ -56,4 +63,27 @@ function draw(){
 
 function updatePercent(per){
     percent = per / 500;
+}
+
+function mousePressed(){
+    for(var i = 0; i < pointsAmount; i++){
+        var p = points[0][i];
+        var dX = mouseX - p.x;
+        var dY = mouseY - p.y;
+        var distance = Math.pow(dX * dX + dY * dY, .5);
+        if(distance <= grabRad){
+            circleGrabbed = i;
+        }
+    }
+}
+
+function mouseReleased(){
+    circleGrabbed = -1;
+}
+
+function mouseDragged(){
+    if (circleGrabbed != -1) {
+        points[0][circleGrabbed].x = mouseX;
+        points[0][circleGrabbed].y = mouseY;
+    }
 }
