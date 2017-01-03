@@ -1,4 +1,3 @@
-var t = 0;
 var points = [];
 var drawingPoints = [];
 var pointsAmount = 4;
