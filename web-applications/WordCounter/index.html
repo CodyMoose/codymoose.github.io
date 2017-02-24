@@ -1,0 +1,18 @@
+<!DOCTYPE html5>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script lang="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script lang="javascript" type="text/javascript" src="libraries/p5.dom.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script lang="javascript" type="text/javascript" src="WordCounter.js"></script>
+  <style> body {padding: 0; margin: 0;} </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <textarea onInput="updateWords()" id="textBox" style="position: absolute; top: 810px; left: 5px" cols="50" rows="7"></textarea>
+    </div>
+    <div id="counter"></div>
+</body>
+</html>
