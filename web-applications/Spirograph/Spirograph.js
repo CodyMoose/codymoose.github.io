@@ -22,7 +22,7 @@ function setup() {
   midSlider = createSlider(1,75,60,1);
   midSlider.position(0,25);
   
-  percentSlider = createSlider(0,1,1,0.01);
+  percentSlider = createSlider(0,2,1,0.01);
   percentSlider.position(0,50);
   
   var sliderWidth = midSlider.width;
