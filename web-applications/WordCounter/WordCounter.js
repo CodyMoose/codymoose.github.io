@@ -7,7 +7,6 @@ var prevMouseY = 0;
 
 function setup() {
     myCanvas = createCanvas(700, 800);
-    myCanvas.position(5, 5);
     colorMode(HSB);
     strokeWeight(strkWt);
 }
@@ -31,7 +30,7 @@ function draw() {
 
 function updateWords() {
     var w = document.getElementById("textBox").value;
-    w = w.replace(/[.,\/#!$%\^&\*;:{}=\_`~()"'“”1234567890]/g,"").replace(/\r?\n/g, " ").replace(/[-—]/g," ").replace(/\t/g," "); // remove any and all punctuation
+    w = w.replace(/[.,\/#!?$%\^&\*;:{}=\_`~()"'“”1234567890]/g,"").replace(/\r?\n/g, " ").replace(/[-—]/g," ").replace(/\t/g," "); // remove any and all punctuation
     var words = w.split(" ");
     dict = {};
     for (var i = 0; i < words.length; i++ ) {
