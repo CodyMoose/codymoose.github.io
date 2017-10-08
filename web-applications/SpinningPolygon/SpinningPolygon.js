@@ -73,7 +73,6 @@ function draw(){
 function reset(){
     angleShift = 360 / pointsAmount;
     thetaOffset = mode * angleShift;
-    circleRad = canvasSize / 10;
 
     centers = [];
     points = [];
