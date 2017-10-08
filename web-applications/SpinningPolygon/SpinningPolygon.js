@@ -18,7 +18,7 @@ function setup(){
     ellipseMode(RADIUS);
     angleShift = 360 / pointsAmount;
     thetaOffset = mode * angleShift;
-    circleRad = min(new Array(canvasSize / (pointsAmount * 1.1), canvasSize / 10));
+    circleRad = canvasSize / 10;
     pointSlider = createSlider(1,20,8,1);
     modeSlider = createSlider(1, 8, 2, 1);
 
@@ -73,7 +73,7 @@ function draw(){
 function reset(){
     angleShift = 360 / pointsAmount;
     thetaOffset = mode * angleShift;
-    circleRad = max(new Array(canvasSize / (pointsAmount * 1.1), canvasSize / 10));
+    circleRad = canvasSize / 10;
 
     centers = [];
     points = [];
