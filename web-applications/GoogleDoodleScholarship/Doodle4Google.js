@@ -23,7 +23,7 @@ let lIndex = 237;
 let lPoints = [];
 let ePoints = [];
 let G;
-//this can be found at https://goo.gl/Jy5viH
+//this can be found at https://goo.gl/Je71xz
 
 function preload(){
     font = loadFont('ProductSansFiles/Product Sans Regular.ttf');
