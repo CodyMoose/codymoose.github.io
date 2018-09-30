@@ -1,5 +1,5 @@
 speed = 2;
-robotCount = 10;
+robotCount = 20;
 robots = [];
 bck = 100;
 a = 0.2;
