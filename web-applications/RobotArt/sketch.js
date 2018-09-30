@@ -1,5 +1,5 @@
 speed = 2;
-robotCount = 10;
+robotCount = 40;
 robots = [];
 bck = 100;
 a = 0.2;
@@ -12,6 +12,7 @@ dangerWalls = false;
 wallForce = scareDist / 2;
 
 function setup() {
+    robots = [];
     createCanvas(600, 500)
     colorMode(HSB)
     background(bck);
@@ -24,6 +25,9 @@ function setup() {
 }
 
 function draw() {
+    if(robotCount != robots.length){
+        setup();
+    }
     if(!sustain)
         background(bck);
     noFill();
