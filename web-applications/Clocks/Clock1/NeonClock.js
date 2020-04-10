@@ -20,12 +20,13 @@ function setup(){
 
 function draw(){
     background(50);
-    hour = new Date().getHours();
-    minute = new Date().getMinutes();
-    second = new Date().getSeconds();
-    milliseconds = new Date().getMilliseconds();
+    d = new Date();
+    hour = d.getHours()
+    minute = d.getMinutes();
+    second = d.getSeconds();
+    milliseconds = d.getMilliseconds();
 
-    hAngle = (15 * hour) + (6 / 15 / 60 * minute) + (15 / 60 / 60 * second) + (15 / 60 / 60 / 1000 * milliseconds);
+    hAngle = (30 * hour) + (30 / 60 * minute) + (30 / 60 / 60 * second) + (30 / 60 / 60 / 1000 * milliseconds);
     mAngle = 6 * minute + 6 / 60 * second + 6 / 60 / 1000 * milliseconds;
     sAngle = 6 * second + (6 / 1000 * milliseconds);
 

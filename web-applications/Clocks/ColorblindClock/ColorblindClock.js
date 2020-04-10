@@ -1,4 +1,4 @@
-let canvasHeight = 200;
+let canvasHeight = 300;
 let hour;
 let minute;
 let second;
